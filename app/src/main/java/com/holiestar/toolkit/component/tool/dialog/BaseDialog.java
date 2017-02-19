@@ -76,8 +76,8 @@ public abstract class BaseDialog {
             return;
         }
         this.styleResourceId=styleId;
+        this.viewResourceId=null;
         this.view=view;
-        this.dialogView= view;
     }
 
     private View getView(){
