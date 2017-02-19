@@ -19,6 +19,11 @@ public class Dialog extends BaseDialog {
     }
 
     @Override
+    public void initUILayout(View v) {
+
+    }
+
+    @Override
     public void initAction(View view) {
         callEventOnPositive();
         callEventOnNegative();
