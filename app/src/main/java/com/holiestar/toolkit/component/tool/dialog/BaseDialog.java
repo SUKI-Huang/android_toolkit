@@ -30,6 +30,7 @@ public abstract class BaseDialog {
     private float maxWidthPercentage=0.9f;
 
     public abstract void initUI(View v);
+    public abstract void initUILayout(View v);
     public abstract void initAction(View v);
     public abstract void initDialog(Dialog dialog);
     public abstract void onShow();
@@ -91,6 +92,7 @@ public abstract class BaseDialog {
         this.viewResourceId=null;
         this.view=null;
         this.initUI(dialogView);
+        this.initUILayout(dialogView);
         this.initAction(dialogView);
         return dialogView;
     }
