@@ -59,7 +59,7 @@ public class UtilAssets {
         return;
     }
 
-    public static String read(Context context,String assetsPath) {
+    public static String read(String assetsPath) {
         String tContents = "";
         try {
             InputStream stream = context.getAssets().open(assetsPath);
