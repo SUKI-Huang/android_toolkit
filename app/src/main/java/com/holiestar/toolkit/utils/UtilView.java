@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
@@ -79,5 +80,15 @@ public class UtilView {
             v.getViewTreeObserver().removeGlobalOnLayoutListener(onGlobalLayoutListener);
         }
 
+    }
+
+    public static int getViewPosition(View v,RecyclerView recyclerView) {
+        View view = v;
+        View parent = (View) v.getParent();
+        while (!(parent instanceof RecyclerView)) {
+            view = parent;
+            parent = (View) parent.getParent();
+        }
+        return recyclerView.getChildAdapterPosition(view);
     }
 }
