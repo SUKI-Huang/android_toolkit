@@ -8,6 +8,8 @@ import android.util.TypedValue;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Suki on 6/15/2016.
@@ -128,5 +130,16 @@ public class UtilString {
             hexValue.append(Integer.toHexString(val));
         }
         return hexValue.toString().substring(8, 24);// 16位
+    }
+
+    public static boolean isEmail(String email) {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        if (!matcher.matches()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
