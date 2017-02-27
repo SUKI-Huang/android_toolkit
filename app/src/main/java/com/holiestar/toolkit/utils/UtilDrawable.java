@@ -1,10 +1,15 @@
 package com.holiestar.toolkit.utils;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * Created by SsuChi on 12/13/2015.
@@ -44,5 +49,40 @@ public class UtilDrawable {
         } catch (Exception e) {
             return 0x00000000;
         }
+    }
+
+    public static void changeBackgroundColor(final ArrayList<View> views, final int newColor, int mSec){
+        if(views==null || views.size()==0){
+            return;
+        }
+
+        if(mSec==0){
+            for(int i=0;i<views.size();i++){
+                View v=views.get(i);
+                if(v instanceof TextView){
+                    ((TextView)v).setTextColor(newColor);
+                }else{
+                    views.get(i).setBackgroundColor(newColor);
+                }
+            }
+            return;
+        }
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), getBackgroundColor(views.get(0)), newColor);
+        colorAnimation.setDuration(mSec);
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                int color = (Integer) animator.getAnimatedValue();
+                for(int i=0;i<views.size();i++){
+                    View v=views.get(i);
+                    if(v instanceof TextView){
+                        ((TextView)v).setTextColor(color);
+                    }else{
+                        views.get(i).setBackgroundColor(color);
+                    }
+                }
+            }
+        });
+        colorAnimation.start();
     }
 }
