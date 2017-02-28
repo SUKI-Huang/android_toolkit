@@ -175,6 +175,10 @@ public abstract class BaseDialog {
         return this;
     }
 
+    public Dialog getDialog(){
+        return dialog;
+    }
+
     public void callEventOnPositive(){
         if(onEvent!=null){
             onEvent.OnPositive(onEvent.getDialog());
