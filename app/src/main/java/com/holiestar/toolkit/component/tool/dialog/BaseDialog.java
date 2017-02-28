@@ -166,6 +166,15 @@ public abstract class BaseDialog {
         return this;
     }
 
+    public BaseDialog setCancelable(boolean b){
+        if(dialog==null){
+            Log.e(TAG,"setCancelable dialog is null");
+            return this;
+        }
+        dialog.setCancelable(b);
+        return this;
+    }
+
     public void callEventOnPositive(){
         if(onEvent!=null){
             onEvent.OnPositive(onEvent.getDialog());
