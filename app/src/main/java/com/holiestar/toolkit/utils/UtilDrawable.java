@@ -50,13 +50,13 @@ public class UtilDrawable {
             return 0x00000000;
         }
     }
-
-    public static void changeBackgroundColor(final ArrayList<View> views, final int newColor, int mSec){
+    
+    public static void changeBackgroundColorAndTextColor(final ArrayList<View> views, final int newColor, int milliscond){
         if(views==null || views.size()==0){
             return;
         }
 
-        if(mSec==0){
+        if(milliscond==0){
             for(int i=0;i<views.size();i++){
                 View v=views.get(i);
                 if(v instanceof TextView){
@@ -68,7 +68,37 @@ public class UtilDrawable {
             return;
         }
         ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), getBackgroundColor(views.get(0)), newColor);
-        colorAnimation.setDuration(mSec);
+        colorAnimation.setDuration(milliscond);
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                int color = (Integer) animator.getAnimatedValue();
+                for(int i=0;i<views.size();i++){
+                    View v=views.get(i);
+                    if(v instanceof TextView){
+                        ((TextView)v).setTextColor(color);
+                    }else{
+                        views.get(i).setBackgroundColor(color);
+                    }
+                }
+            }
+        });
+        colorAnimation.start();
+    }
+
+    public static void changeBackgroundColor(final ArrayList<View> views, final int newColor, int millisecond){
+        if(views==null || views.size()==0){
+            return;
+        }
+
+        if(millisecond==0){
+            for(int i=0;i<views.size();i++){
+                views.get(i).setBackgroundColor(newColor);
+            }
+            return;
+        }
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), getBackgroundColor(views.get(0)), newColor);
+        colorAnimation.setDuration(millisecond);
         colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animator) {
