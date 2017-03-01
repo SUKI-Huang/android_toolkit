@@ -91,4 +91,14 @@ public class UtilView {
         }
         return recyclerView.getChildAdapterPosition(view);
     }
+
+    public static View getChildFromRecyclerView(View v,RecyclerView recyclerView) {
+        View view = v;
+        View parent = (View) v.getParent();
+        while (!(parent instanceof RecyclerView)) {
+            view = parent;
+            parent = (View) parent.getParent();
+        }
+        return view;
+    }
 }
