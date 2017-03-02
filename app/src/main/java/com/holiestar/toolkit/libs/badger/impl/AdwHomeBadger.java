@@ -6,9 +6,11 @@ import android.content.Intent;
 
 import com.holiestar.toolkit.libs.badger.Badger;
 import com.holiestar.toolkit.libs.badger.ShortcutBadgeException;
+import com.holiestar.toolkit.libs.badger.util.BroadcastHelper;
 
 import java.util.Arrays;
 import java.util.List;
+
 
 /**
  * @author Gernot Pansy
@@ -17,6 +19,7 @@ public class AdwHomeBadger implements Badger {
 
     public static final String INTENT_UPDATE_COUNTER = "org.adw.launcher.counter.SEND";
     public static final String PACKAGENAME = "PNAME";
+    public static final String CLASSNAME = "CNAME";
     public static final String COUNT = "COUNT";
 
     @Override
@@ -24,8 +27,13 @@ public class AdwHomeBadger implements Badger {
 
         Intent intent = new Intent(INTENT_UPDATE_COUNTER);
         intent.putExtra(PACKAGENAME, componentName.getPackageName());
+        intent.putExtra(CLASSNAME, componentName.getClassName());
         intent.putExtra(COUNT, badgeCount);
-        context.sendBroadcast(intent);
+        if (BroadcastHelper.canResolveBroadcast(context, intent)) {
+            context.sendBroadcast(intent);
+        } else {
+            throw new ShortcutBadgeException("unable to resolve intent: " + intent.toString());
+        }
     }
 
     @Override
