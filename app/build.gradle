@@ -19,5 +19,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    provided 'com.android.support:design:25.1.1'
+    provided "me.leolin:ShortcutBadger:1.1.14@aar"
+    provided 'com.android.support:design:25.3.0'
 }

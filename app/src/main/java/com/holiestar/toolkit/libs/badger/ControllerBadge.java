@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import me.leolin.shortcutbadger.ShortcutBadger;
+
 /**
  * Created by tony1 on 3/2/2017.
  */
@@ -51,7 +53,7 @@ public class ControllerBadge {
     }
 
     public void setCount(int count){
-        setting.edit().putInt(SETTING_COUNT,count).commit();
+        setting.edit().putInt(SETTING_COUNT,count).apply();
     }
 
 }
