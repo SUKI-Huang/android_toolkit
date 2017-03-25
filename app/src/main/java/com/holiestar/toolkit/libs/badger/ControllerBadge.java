@@ -53,6 +53,7 @@ public class ControllerBadge {
     }
 
     public void setCount(int count){
+        ShortcutBadger.applyCount(context, count);
         setting.edit().putInt(SETTING_COUNT,count).apply();
     }
 
