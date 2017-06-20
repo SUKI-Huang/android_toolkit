@@ -165,7 +165,7 @@ public abstract class BaseDialog {
         if(dialog==null){
             return false;
         }
-        return dialog.isShowing()
+        return dialog.isShowing();
     }
 
     public BaseDialog setMaxWidthPercentage(float maxWidthPercentage) {
