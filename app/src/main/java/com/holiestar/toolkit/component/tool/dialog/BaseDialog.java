@@ -15,11 +15,12 @@ import com.holiestar.toolkit.utils.UtilScreen;
  * Created by tony1 on 2/14/2017.
  */
 
-public abstract class BaseDialog {
+public abstract class BaseDialog<T extends BaseDialog> {
     private final String TAG=getClass().getSimpleName();
     private Context context;
     private Dialog dialog;
     private View dialogView;
+    private T baseDialog;
 
 
     //parameter
@@ -36,11 +37,57 @@ public abstract class BaseDialog {
     public abstract void onShow();
     public abstract void onDismiss();
 
-    public OnDialogEvent onEvent;
+//    void OnShow();
+//    void OnDismiss();
+//    void OnPositive(T dialog);
+//    void OnNegative(T dialog);
+    private OnShowListener onShowListener;
+    public interface OnShowListener {
+        void OnShow();
+    }
+    private OnDismissListener onDismissListener;
+    public interface OnDismissListener {
+        void OnDismiss();
+    }
+    private OnPositiveListener onPositiveListener;
+    public interface OnPositiveListener {
+        void OnPositive();
+    }
+    private OnNegativeListener onNegativeListener;
+    public interface OnNegativeListener {
+        void OnNegative();
+    }
 
+    public BaseDialog setOnShowListener(OnShowListener onShowListener) {
+        this.onShowListener = onShowListener;
+        return this;
+    }
+
+    public BaseDialog setOnDismissListener(OnDismissListener onDismissListener) {
+        this.onDismissListener = onDismissListener;
+        return this;
+    }
+
+    public BaseDialog setOnPositiveListener(OnPositiveListener onPositiveListener) {
+        this.onPositiveListener = onPositiveListener;
+        return this;
+    }
+
+    public BaseDialog setOnNegativeListener(OnNegativeListener onNegativeListener) {
+        this.onNegativeListener = onNegativeListener;
+        return this;
+    }
+
+    public OnDialogEvent onEvent;
+    @Deprecated
     public BaseDialog setOnEvent(OnDialogEvent onEvent) {
         this.onEvent = onEvent;
         return this;
+    }
+
+    public BaseDialog(Context context,T dialog){
+        this.context=context;
+        this.baseDialog=dialog;
     }
 
     public BaseDialog(Context context){
@@ -190,11 +237,17 @@ public abstract class BaseDialog {
         if(onEvent!=null){
             onEvent.OnPositive(onEvent.getDialog());
         }
+        if(onPositiveListener!=null){
+            onPositiveListener.OnPositive();
+        }
     }
 
     public void callEventOnNegative(){
         if(onEvent!=null){
             onEvent.OnNegative(onEvent.getDialog());
+        }
+        if(onNegativeListener!=null){
+            onNegativeListener.OnNegative();
         }
     }
 
@@ -203,12 +256,18 @@ public abstract class BaseDialog {
         if(onEvent!=null){
             onEvent.OnShow();
         }
+        if(onShowListener!=null){
+            onShowListener.OnShow();
+        }
     }
 
     private void callEventOnDismiss(){
         onDismiss();
         if(onEvent!=null){
             onEvent.OnDismiss();
+        }
+        if(onDismissListener!=null){
+            onDismissListener.OnDismiss();
         }
     }
 }
