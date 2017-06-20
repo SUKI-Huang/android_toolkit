@@ -49,10 +49,26 @@ public class UtilSystem {
         return uuid;
     }
 
+    private static Boolean isOOrHigher;
+    public static boolean isOOrHigher(){
+        if(isKitkatOrHigher==null){
+            isKitkatOrHigher= Build.VERSION.SDK_INT >= 26;
+        }
+        return isOOrHigher;
+    }
+
+    private static Boolean isNougatOrHigher;
+    public static boolean isNougatOrHigher(){
+        if(isKitkatOrHigher==null){
+            isKitkatOrHigher= Build.VERSION.SDK_INT >= 24;
+        }
+        return isNougatOrHigher;
+    }
+
     private static Boolean isMarshmallowOrHigher;
     public static boolean isMarshmallowOrHigher(){
         if(isMarshmallowOrHigher==null){
-            isMarshmallowOrHigher= new Boolean(Build.VERSION.SDK_INT >= 23);
+            isMarshmallowOrHigher= Build.VERSION.SDK_INT >= 23;
         }
         return isMarshmallowOrHigher;
     }
@@ -60,7 +76,7 @@ public class UtilSystem {
     private static Boolean isLollipopOrHigher;
     public static boolean isLollipopOrHigher(){
         if(isLollipopOrHigher==null){
-            isLollipopOrHigher= new Boolean(Build.VERSION.SDK_INT >= 21);
+            isLollipopOrHigher= Build.VERSION.SDK_INT >= 21;
         }
         return isLollipopOrHigher;
     }
@@ -68,7 +84,7 @@ public class UtilSystem {
     private static Boolean isKitkatOrHigher;
     public static boolean isKitkatOrHigher(){
         if(isKitkatOrHigher==null){
-            isKitkatOrHigher= new Boolean(Build.VERSION.SDK_INT >= 19);
+            isKitkatOrHigher= Boolean.valueOf(Build.VERSION.SDK_INT >= 19);
         }
         return isKitkatOrHigher;
     }

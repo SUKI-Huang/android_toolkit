@@ -97,4 +97,24 @@ public class UtilApp {
         }
 
     }
+
+    public static boolean hasGooglePlay() {
+        return isAppInstalled("com.android.vending");
+    }
+
+    public static boolean hasWeChat() {
+        return isAppInstalled("com.tencent.mm");
+    }
+
+    public static boolean hasFacebookMessenger() {
+        return isAppInstalled("com.facebook.orca");
+    }
+
+    public static boolean hasLine() {
+        return isAppInstalled("jp.naver.line.android");
+    }
+
+    public static boolean hasKakaoTalk() {
+        return isAppInstalled("com.kakao.talk");
+    }
 }
