@@ -359,4 +359,18 @@ public class UtilFile {
             Toast.makeText(context,errorMessage, Toast.LENGTH_SHORT).show();
         }
     }
+
+    public static String getFileName(String filePath){
+        if(filePath==null){
+            return null;
+        }
+        boolean isExist=isExist(filePath);
+        if(isExist){
+            String[] temp=filePath.split("/");
+            String FilaName=temp[temp.length-1];
+            return FilaName;
+        }else{
+            return null;
+        }
+    }
 }
