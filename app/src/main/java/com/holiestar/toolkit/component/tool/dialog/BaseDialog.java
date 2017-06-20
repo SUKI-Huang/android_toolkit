@@ -161,6 +161,13 @@ public abstract class BaseDialog {
         }
     }
 
+    public boolean isShowing(){
+        if(dialog==null){
+            return false;
+        }
+        return dialog.isShowing()
+    }
+
     public BaseDialog setMaxWidthPercentage(float maxWidthPercentage) {
         this.maxWidthPercentage = maxWidthPercentage;
         return this;
