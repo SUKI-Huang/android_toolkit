@@ -15,13 +15,11 @@ import com.holiestar.toolkit.utils.UtilScreen;
  * Created by tony1 on 2/14/2017.
  */
 
-public abstract class BaseDialog<T extends BaseDialog> {
+public abstract class BaseDialog<T> {
     private final String TAG=getClass().getSimpleName();
     private Context context;
     private Dialog dialog;
     private View dialogView;
-    private T baseDialog;
-
 
     //parameter
     private Integer styleResourceId;
@@ -83,11 +81,6 @@ public abstract class BaseDialog<T extends BaseDialog> {
     public BaseDialog setOnEvent(OnDialogEvent onEvent) {
         this.onEvent = onEvent;
         return this;
-    }
-
-    public BaseDialog(Context context,T dialog){
-        this.context=context;
-        this.baseDialog=dialog;
     }
 
     public BaseDialog(Context context){
