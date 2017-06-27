@@ -117,4 +117,8 @@ public class UtilApp {
     public static boolean hasKakaoTalk() {
         return isAppInstalled("com.kakao.talk");
     }
+
+    public static boolean hasWhatsapp() {
+        return isAppInstalled("com.whatsapp");
+    }
 }
