@@ -1,6 +1,7 @@
 package com.holiestar.toolkit.toolkit;
 
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.media.RingtoneManager;
@@ -9,6 +10,9 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
+
+import java.io.File;
 
 /**
  * Created by tony1 on 1/21/2017.
@@ -133,6 +137,24 @@ public class UriToolkit {
 
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    //MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+    public Uri getUriFromFilePath(Uri uriType, String filePath) {
+        try {
+            Cursor cursor = context.getContentResolver().query(
+                    uriType,
+                    new String[]{MediaStore.Audio.Media._ID},
+                    MediaStore.Audio.Media.DATA + "=? ",
+                    new String[]{filePath}, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+                cursor.close();
+                return Uri.withAppendedPath(uriType, "" + id);
+            }
+        } catch (Exception e) {
+        }
+        return null;
     }
 
     public static class Ringtone {
