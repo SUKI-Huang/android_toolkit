@@ -140,7 +140,7 @@ public class UriToolkit {
     }
 
     //MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-    public Uri getUriFromFilePath(Uri uriType, String filePath) {
+    public static Uri getUriFromFilePath(Uri uriType, String filePath) {
         try {
             Cursor cursor = context.getContentResolver().query(
                     uriType,
