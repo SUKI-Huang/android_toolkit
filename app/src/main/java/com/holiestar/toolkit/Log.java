@@ -1,24 +1,44 @@
 package com.holiestar.toolkit;
 
+import android.text.TextUtils;
+
 /**
  * Created by Suki on 7/15/2017.
  */
 
 public class Log {
-
-    public static void d(String tag, String message) {
-        if (BuildConfig.DEBUG) android.util.Log.d(tag, message);
+    private static final boolean isDebug = BuildConfig.DEBUG;
+    public static void i(String tag, String... args) {
+        if (isDebug) {
+            Log.i(tag, getLog(tag,args));
+        }
     }
-
-    public static void i(String tag, String message) {
-        if (BuildConfig.DEBUG) android.util.Log.i(tag, message);
+    public static void d(String tag, String... args) {
+        if (isDebug) {
+            Log.i(tag, getLog(tag,args));
+        }
     }
-
-    public static void e(String tag, String message) {
-        if (BuildConfig.DEBUG) android.util.Log.e(tag, message);
+    public static void v(String tag, String... args) {
+        if (isDebug) {
+            Log.i(tag, getLog(tag,args));
+        }
     }
-
-    public static void e(String tag, String message, Exception e) {
-        if (BuildConfig.DEBUG) android.util.Log.e(tag, message, e);
+    public static void w(String tag, String... args) {
+        if (isDebug) {
+            Log.i(tag, getLog(tag,args));
+        }
+    }
+    public static void e(String tag, String... args) {
+        if (isDebug) {
+            Log.i(tag, getLog(tag,args));
+        }
+    }
+    private static String getLog(String tag, String... args){
+        StringBuilder builder = new StringBuilder();
+        for (String arg : args){
+            if (TextUtils.isEmpty(arg)) continue;
+            builder.append(arg);
+        }
+        return builder.toString();
     }
 }
