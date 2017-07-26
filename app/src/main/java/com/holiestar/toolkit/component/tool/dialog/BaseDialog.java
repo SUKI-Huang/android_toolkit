@@ -1,5 +1,6 @@
 package com.holiestar.toolkit.component.tool.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,7 +17,7 @@ import com.holiestar.toolkit.utils.UtilScreen;
  */
 
 public abstract class BaseDialog<T> {
-    private final String TAG=getClass().getSimpleName();
+    private final String TAG = getClass().getSimpleName();
     private Context context;
     private Dialog dialog;
     private View dialogView;
@@ -25,33 +26,45 @@ public abstract class BaseDialog<T> {
     private Integer styleResourceId;
     private Integer viewResourceId;
     private View view;
-    private boolean isSizeIniitalized=false;
-    private float maxWidthPercentage=0.9f;
+    private boolean isSizeIniitalized = false;
+    private float maxWidthPercentage = 0.9f;
 
     public abstract void initUI(View v);
+
     public abstract void initUILayout(View v);
+
     public abstract void initAction(View v);
+
     public abstract void initDialog(Dialog dialog);
+
     public abstract void onShow();
+
     public abstract void onDismiss();
 
-//    void OnShow();
+    //    void OnShow();
 //    void OnDismiss();
 //    void OnPositive(T dialog);
 //    void OnNegative(T dialog);
     private OnShowListener onShowListener;
+
     public interface OnShowListener {
         void OnShow();
     }
+
     private OnDismissListener onDismissListener;
+
     public interface OnDismissListener {
         void OnDismiss();
     }
+
     private OnPositiveListener onPositiveListener;
+
     public interface OnPositiveListener {
         void OnPositive();
     }
+
     private OnNegativeListener onNegativeListener;
+
     public interface OnNegativeListener {
         void OnNegative();
     }
@@ -77,76 +90,77 @@ public abstract class BaseDialog<T> {
     }
 
     public OnDialogEvent onEvent;
+
     @Deprecated
     public BaseDialog setOnEvent(OnDialogEvent onEvent) {
         this.onEvent = onEvent;
         return this;
     }
 
-    public BaseDialog(Context context){
-        this.context=context;
+    public BaseDialog(Context context) {
+        this.context = context;
     }
 
-    public void setContentView(Integer viewResourceId){
-       setContentView(viewResourceId,null);
+    public void setContentView(Integer viewResourceId) {
+        setContentView(viewResourceId, null);
     }
 
-    public void setContentView(Integer viewResourceId,Integer styleId){
-        if(dialogView!=null){
-            setContentView(LayoutInflater.from(context).inflate(viewResourceId,null));
+    public void setContentView(Integer viewResourceId, Integer styleId) {
+        if (dialogView != null) {
+            setContentView(LayoutInflater.from(context).inflate(viewResourceId, null));
             return;
         }
-        this.styleResourceId=styleId;
-        this.viewResourceId=viewResourceId;
-        this.view=null;
+        this.styleResourceId = styleId;
+        this.viewResourceId = viewResourceId;
+        this.view = null;
     }
 
-    public void setContentView(View view){
-        setContentView(view,null);
+    public void setContentView(View view) {
+        setContentView(view, null);
     }
 
-    public void setContentView(View view,Integer styleId){
-        if(dialogView!=null){
-            this.dialogView= view;
-            this.viewResourceId=null;
-            this.view=null;
-            if(dialog!=null){
+    public void setContentView(View view, Integer styleId) {
+        if (dialogView != null) {
+            this.dialogView = view;
+            this.viewResourceId = null;
+            this.view = null;
+            if (dialog != null) {
                 dialog.setContentView(dialogView);
             }
             return;
         }
-        this.styleResourceId=styleId;
-        this.viewResourceId=null;
-        this.view=view;
+        this.styleResourceId = styleId;
+        this.viewResourceId = null;
+        this.view = view;
     }
 
-    private View getView(){
-        if(dialogView!=null){
+    private View getView() {
+        if (dialogView != null) {
             return dialogView;
         }
-        if(view!=null){
-            this.dialogView=view;
-        }else if(viewResourceId!=null) {
+        if (view != null) {
+            this.dialogView = view;
+        } else if (viewResourceId != null) {
             this.dialogView = LayoutInflater.from(context).inflate(viewResourceId, null);
         }
-        this.viewResourceId=null;
-        this.view=null;
+        this.viewResourceId = null;
+        this.view = null;
         this.initUI(dialogView);
         this.initUILayout(dialogView);
         this.initAction(dialogView);
         return dialogView;
     }
 
-    public void show(){
-        dialogView=getView();
-        if(dialog==null){
-            if(styleResourceId!=null){
+    public void show() {
+        dialogView = getView();
+        if (dialog == null) {
+            if (styleResourceId != null) {
                 dialog = new Dialog(context, styleResourceId);
-            }else{
-                dialog=new Dialog(context);
+            } else {
+                dialog = new Dialog(context);
             }
             initDialog(dialog);
-            Log.i(TAG,"show\tdialogView:"+(dialogView!=null));
+            Log.i(TAG, "show\tdialogView:" + (dialogView != null));
             dialog.setContentView(dialogView);
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
@@ -155,34 +169,38 @@ public abstract class BaseDialog<T> {
                 }
             });
         }
+        if (context instanceof Activity) {
+            if (((Activity) context).isFinishing()) return;
+
+        }
         dialog.show();
         initDialogSize(dialog);
         callEventOnShow();
     }
 
-    public void dismiss(){
-        if(dialog==null){
+    public void dismiss() {
+        if (dialog == null) {
             return;
         }
         dialog.dismiss();
     }
 
     public void initDialogSize(Dialog dialog) {
-        if (dialog == null ) {
+        if (dialog == null) {
             return;
         }
-        if(isSizeIniitalized){
+        if (isSizeIniitalized) {
             return;
         }
 
-        boolean isTable=UtilScreen.isTablet();
-        boolean isPhone=!isTable;
-        Log.i(TAG,"initDialogSize\tisTable:"+isTable);
-        if(isTable){
-            int dialogWidthMax= (int) (UtilScreen.getScreenSmallerSide()*maxWidthPercentage);
+        boolean isTable = UtilScreen.isTablet();
+        boolean isPhone = !isTable;
+        Log.i(TAG, "initDialogSize\tisTable:" + isTable);
+        if (isTable) {
+            int dialogWidthMax = (int) (UtilScreen.getScreenSmallerSide() * maxWidthPercentage);
             int dialogWidthIdeal = (int) UtilScreen.dp2Pix(320);
-            if(dialogWidthIdeal>dialogWidthMax){
-                dialogWidthIdeal=dialogWidthMax;
+            if (dialogWidthIdeal > dialogWidthMax) {
+                dialogWidthIdeal = dialogWidthMax;
             }
 
             WindowManager.LayoutParams params = new WindowManager.LayoutParams();
@@ -191,18 +209,18 @@ public abstract class BaseDialog<T> {
             dialog.getWindow().setAttributes(params);
         }
 
-        if(isPhone){
+        if (isPhone) {
             WindowManager.LayoutParams params = new WindowManager.LayoutParams();
             Window window = dialog.getWindow();
-            Log.i(TAG,"window\tgetAttributes:"+(window.getAttributes()!=null));
+            Log.i(TAG, "window\tgetAttributes:" + (window.getAttributes() != null));
             params.copyFrom(window.getAttributes());
-            params.width = (int) (UtilScreen.getScreenSmallerSide()*maxWidthPercentage);
+            params.width = (int) (UtilScreen.getScreenSmallerSide() * maxWidthPercentage);
             dialog.getWindow().setAttributes(params);
         }
     }
 
-    public boolean isShowing(){
-        if(dialog==null){
+    public boolean isShowing() {
+        if (dialog == null) {
             return false;
         }
         return dialog.isShowing();
@@ -213,53 +231,53 @@ public abstract class BaseDialog<T> {
         return this;
     }
 
-    public BaseDialog setCancelable(boolean b){
-        if(dialog==null){
-            Log.e(TAG,"setCancelable dialog is null");
+    public BaseDialog setCancelable(boolean b) {
+        if (dialog == null) {
+            Log.e(TAG, "setCancelable dialog is null");
             return this;
         }
         dialog.setCancelable(b);
         return this;
     }
 
-    public Dialog getDialog(){
+    public Dialog getDialog() {
         return dialog;
     }
 
-    public void callEventOnPositive(){
-        if(onEvent!=null){
+    public void callEventOnPositive() {
+        if (onEvent != null) {
             onEvent.OnPositive(onEvent.getDialog());
         }
-        if(onPositiveListener!=null){
+        if (onPositiveListener != null) {
             onPositiveListener.OnPositive();
         }
     }
 
-    public void callEventOnNegative(){
-        if(onEvent!=null){
+    public void callEventOnNegative() {
+        if (onEvent != null) {
             onEvent.OnNegative(onEvent.getDialog());
         }
-        if(onNegativeListener!=null){
+        if (onNegativeListener != null) {
             onNegativeListener.OnNegative();
         }
     }
 
-    private void callEventOnShow(){
+    private void callEventOnShow() {
         onShow();
-        if(onEvent!=null){
+        if (onEvent != null) {
             onEvent.OnShow();
         }
-        if(onShowListener!=null){
+        if (onShowListener != null) {
             onShowListener.OnShow();
         }
     }
 
-    private void callEventOnDismiss(){
+    private void callEventOnDismiss() {
         onDismiss();
-        if(onEvent!=null){
+        if (onEvent != null) {
             onEvent.OnDismiss();
         }
-        if(onDismissListener!=null){
+        if (onDismissListener != null) {
             onDismissListener.OnDismiss();
         }
     }
