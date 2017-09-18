@@ -51,16 +51,16 @@ public class UtilSystem {
 
     private static Boolean isOOrHigher;
     public static boolean isOOrHigher(){
-        if(isKitkatOrHigher==null){
-            isKitkatOrHigher= Build.VERSION.SDK_INT >= 26;
+        if(isOOrHigher==null){
+            isOOrHigher= Build.VERSION.SDK_INT >= 26;
         }
         return isOOrHigher;
     }
 
     private static Boolean isNougatOrHigher;
     public static boolean isNougatOrHigher(){
-        if(isKitkatOrHigher==null){
-            isKitkatOrHigher= Build.VERSION.SDK_INT >= 24;
+        if(isNougatOrHigher==null){
+            isNougatOrHigher= Build.VERSION.SDK_INT >= 24;
         }
         return isNougatOrHigher;
     }
