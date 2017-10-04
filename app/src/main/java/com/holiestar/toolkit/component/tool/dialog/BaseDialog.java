@@ -179,8 +179,10 @@ public abstract class BaseDialog<T> {
     }
 
     public void dismiss() {
-        if (dialog == null) {
-            return;
+        if (dialog == null) return;
+        if(!dialog.isShowing())return;
+        if (context instanceof Activity) {
+            if (((Activity) context).isFinishing()) return;
         }
         dialog.dismiss();
     }
