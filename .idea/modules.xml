@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/AndroidToolkit.iml" filepath="$PROJECT_DIR$/AndroidToolkit.iml" />
       <module fileurl="file://D:\projects\AndroidToolkit\android_toolkit.iml" filepath="D:\projects\AndroidToolkit\android_toolkit.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://D:\projects\AndroidToolkit\app\app.iml" filepath="D:\projects\AndroidToolkit\app\app.iml" />
     </modules>
   </component>
 </project>
