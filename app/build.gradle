@@ -5,7 +5,7 @@ android {
     buildToolsVersion "26.0.2"
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
     }
@@ -19,8 +19,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    provided "me.leolin:ShortcutBadger:1.1.17@aar"
+    provided "me.leolin:ShortcutBadger:1.1.19@aar"
     provided 'com.android.support:design:25.3.1'
-    provided 'com.facebook.fresco:fresco:1.4.0'
-    provided 'jp.wasabeef:fresco-processors:2.1.0'
 }
